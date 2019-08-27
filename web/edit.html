@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bootstrap 101 Template</title>
+
+  <!-- Bootstrap -->
+  <link href="./lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!--
+      HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+    -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  <style>
+    .wrap {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: url('images/bg03.jpg') center bottom no-repeat;
+      overflow: auto;
+    }
+
+    .navbar-brand {
+      padding: 10px 15px;
+    }
+
+    .page-title {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .file-input {
+      outline: none;
+      display: inline-block;
+      margin-top: 5px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-horizontal {
+      margin-top: 10px;
+    }
+
+    .logout {
+      font-weight: 900;
+      font-size: 20px;
+      color: #ff0000;
+      text-decoration: none;
+    }
+
+    .logout:hover {
+      text-decoration: none;
+      color: yellowgreen;
+    }
+
+    .preview {
+      width: 100px;
+      height: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <nav class="navbar  navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mymenu">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./index.html"><img src="images/logo.png"></a>
+        </div>
+      </div>
+    </nav>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+              <div class="row">
+                <div class="col-md-6 page-title">英雄信息修改</div>
+                <div class="col-md-6 text-right">当前位置：首页 &gt; 英雄信息修改</div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <form id='formEdit' action="#" method="" class="form-horizontal">
+                <!-- 隐藏一个input -->
+                <input type="hidden" id="heroId" name="heroId" />
+                <div class="form-group">
+                  <label for="heroName" class="col-sm-2 control-label">姓名</label>
+                  <div class="col-sm-10">
+                    <input required type="text" class="form-control" id="heroName" name="heroName" placeholder="请输入姓名"
+                      value="" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="skillName" class="col-sm-2 control-label">技能</label>
+                  <div class="col-sm-10">
+                    <input required type="text" class="form-control" id="skillName" name="skillName" placeholder="请输入技能"
+                      value="" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="heroIcon" class="col-sm-2 control-label">头像</label>
+                  <div class="col-sm-10">
+                    <img src="" class='preview' alt="">
+                    <input required type="file" class="file-input" id="heroIcon" name="heroIcon" />
+
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-primary btn-save">
+                      保存
+                    </button>
+                    <button type="button" class="btn btn-cancel">取消</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="./lib/bootstrap/js/jquery-1.12.4.js"></script>
+<!--
+  Include all compiled plugins (below), or include individual files as needed
+-->
+<script src="./lib/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- <script>
+  //1. 获取 url 中的 id 值 ----------------------------------------
+  //1.1 获取 url? 后面的值
+  let arr = window.location.search.split('=');
+  let id = arr[1]; // 获取了 id
+
+
+  //2. 根据 id 值 ，去服务器 查询 对应 的 英雄 信息 -----------------
+  $.ajax({
+    url: 'search',
+    type: 'get',
+    data: { id: id },
+    success: function (bcData) {
+      console.log(bcData);
+      //3. 将 英雄 信息 显示在 各种 表单 控件 中，给用户查看
+      // 将 服务器返回的 英雄 信息 设置给 各个 input 和 img 标签
+      $('#heroId').val(bcData.data.id);
+      $('#heroName').val(bcData.data.name);
+      $('#skillName').val(bcData.data.skill);
+      $('.preview').attr('src', bcData.data.icon);
+    }
+  });
+
+  //2.1 当 文件选择框 里 的 文件 发生了 改变时（用户选了一个新的文件）
+  $('#heroIcon').change(function () {
+    // a.获取 用户选择的 新文件的 信息
+    let fileInfos = this.files;
+    // b.浏览器 为了保护 用户隐私，不会对 js 代码 暴露 用户电脑文件的 物理路径
+    // console.log(fileInfos);
+
+    // c.浏览器 提供了 URL.createObjectURL 方法 来创建一个 临时的 路径 给 JS 访问
+    let fileURl = URL.createObjectURL(fileInfos[0]);
+    // console.log(fileURl);
+
+    // d.设置 预览图片 为 临时路径，用来 展示 新选择 预览图片
+    $('.preview').attr('src', fileURl);
+  });
+
+
+
+
+
+  //4. 用户修改完毕后，点击 保存按钮，将 新的数据 提交到 服务器
+  $('button.btn-save').click(function () {
+    //4.1 获取 表单dom对象，并 传入 FormData 构造函数，创建 formData 对象
+    let formData = new FormData(document.getElementById('formEdit'));
+
+    //4.2 使用 jQery异步 提交
+    $.ajax({
+      url: 'edit',
+      type: 'post',
+      data: formData,
+      contentType:false, // 不要设置请求头
+      processData:false, // 不要修改数据-- formdata 方式提交数据，不要用 url-encode
+      success: function (backData) {
+        if(backData.code == 203){
+          alert('恭喜您，更新英雄成功~~！');
+          window.location = '/index.html';
+        }
+      }
+    });
+  });
+
+</script> -->
+
+
+
+
+
+
+<script>
+//显示要修改的数据-----------------------------
+//1.通过JS获取当前url?id=1中的id的值
+let paraList = location.search.split('=');//->['?id','1']
+//                                                0   1
+let hid = paraList[1];
+$.ajax({
+  url:'/search',
+  type:'get',
+  data:{id:hid},
+  success:function(backData){
+    if(backData.code==200){
+      $('#heroId').val(backData.data.id);
+      $('#heroName').val(backData.data.name);
+      $('#skillName').val(backData.data.skill);
+      $('.preview').attr('src','/uploads/'+backData.data.icon);
+      console.log(backData);
+      
+    }
+  }
+})
+
+$('#heroIcon').change(function(){
+  let fileInfos = this.files;
+  let fileURl= URL.createObjectURL(fileInfos[0]);
+  $('.preview').attr('src',fileURl);
+})
+
+$('.btn-save').click(function(){
+  let fdata = new FormData(document.getElementById('formEdit'));
+  $.ajax({
+    url:'/edit',
+    type:'post',
+    data:fdata,
+    contentType:false,
+    processData:false,
+    success:function(backData){
+      if(backData.code==203){
+        alert('恭喜宁更新成功了');
+        window.location='./index.html';
+      }else{
+        alert('更新失败了');
+      }
+    }
+  })
+})
+</script>

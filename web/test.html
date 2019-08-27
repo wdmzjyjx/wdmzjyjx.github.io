@@ -1,0 +1,38 @@
+<html>
+
+<head>
+  <title></title>
+  <meta charset='UTF-8' />
+  <script src="./jquery-1.12.4.js"></script>
+  <script>
+    function a() {
+      $.post('http://127.0.0.1:3747/list?r='+Math.random(),'usrName=james',function(data){
+        alert(data);
+      });
+
+      // var xhr = new XMLHttpRequest();
+      // xhr.timeout = 3000;
+      // xhr.ontimeout = function (event) {
+      //   alert("请求超时！");
+      // }
+      // var formData = new FormData();
+      // formData.append('usrName', 'James');
+      // xhr.open('post', 'http://127.0.0.1:3747/list?r='+Math.random());
+      // xhr.send(formData);
+      // xhr.onreadystatechange = function () {
+      //   if (xhr.readyState == 4 && xhr.status == 200) {
+      //     alert(xhr.responseText);
+      //   }
+      //   else {
+      //     alert(xhr.statusText);
+      //   }
+      // }
+    }
+  </script>
+</head>
+
+<body>
+  <input type="button" value="跨域测试" onclick="a()">
+</body>
+
+</html>
